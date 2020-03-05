@@ -4,6 +4,7 @@ import os
 import stat
 import shutil
 import sys
+import random
 
 
 dry_run = False
@@ -73,10 +74,20 @@ def rebalance_path(path):
 
 
 def rebalance():
+    path_list = []
     for root, dirs, files in os.walk(sys.argv[1]):
         for name in files:
             path = os.path.join(root, name)
-            rebalance_path(path)
+            path_list.append(path)
+
+    path_list_len = len(path_list)
+    i = 0
+    random.shuffle(path_list)
+
+    for path in path_list:
+        print("{} / {} | {} %".format(i, path_list_len, (float(i) / float(path_list_len))*100.0))
+        rebalance_path(path)
+        i += 1
 
 
 if __name__ == "__main__":
