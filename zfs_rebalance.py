@@ -21,16 +21,28 @@ def rebalance_path(path):
         return
 
     base_dir = os.path.dirname(path)
-    print("changing {} to 0700".format(base_dir))
 
     saved_dir_stat = os.lstat(base_dir)
     saved_dir_mode = saved_dir_stat.st_mode
+
+    saved_file_stat = os.lstat(path)
+    saved_file_mode = saved_file_stat.st_mode
+
+    # user id check - can't do operations below if we don't own it
+    uid = os.getuid()
+
+    if saved_dir_stat.st_uid != uid:
+        print("uid mismatch on dir {}, skipping {}".format(base_dir, path))
+
+    if saved_file_stat.st_uid != uid:
+        print("uid mismatch on file {}, skipping".format(path))
+
+    print("changing {} to 0700".format(base_dir))
+
     os.chmod(base_dir, stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR) # 0700
 
     print("changing {} to 0700".format(path))
 
-    saved_file_stat = os.lstat(path)
-    saved_file_mode = saved_file_stat.st_mode
     os.chmod(path, stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR) # 0700
 
     counter = 1
