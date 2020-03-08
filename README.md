@@ -81,6 +81,10 @@ Each run was approximately:
 
 or 46.5 hours.
 
+Here is a plot showing the percent capacity of the three above outputs:
+
+![percent capacity changes](rebalance.png)
+
 Note that deduplication has to be off for this rebalance to work. As well, if
 you do a snapshot before this, expect to require enough disk space to hold an
 entirely new set of blocks. But that's the point, because the aim of this tool
