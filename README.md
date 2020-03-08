@@ -10,9 +10,9 @@ original permissions are restored.
 
 The primary use of this script is to spread blocks around equally in a zpool.
 If a new vdev is added to an existing pool, it initially doesn't have any
-blocks. Read and writes are round-robin spread between the vdevs in a pool, and . If the
-original vdevs were close to capacity then this isn't possible so the blocks are
-written to the new vdev.
+blocks. Read and writes are round-robin spread between the vdevs in a pool, but
+if the original vdevs were close to capacity then this isn't possible so the
+blocks are written to the new vdev.
 
 Here is an example of an unbalanced zpool:
 
